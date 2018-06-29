@@ -1,0 +1,44 @@
+docytype
+html
+    head
+        meta(charset='utf-8')
+        title project list
+        link(type="text/css",rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+        script(src='https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js')
+        script(src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js")
+        script(src='/js/project.js')
+    body(class='container')
+        ol(class='breadcrumb')
+            li home
+        p
+            button(class='btn btn-success btn-sm')
+                span(class='glyphicon glyphicon-plus')
+                span  新增项目
+        table(class='table')
+            thead
+                tr
+                    th 项目名称
+                    th 描述
+                    th 创建人
+                    th 操作时间
+                    th 操作
+            tbody
+                tr
+                    td 运管后台
+                    td 商户运营后台
+                    td 董智华
+                    td 2018-06-29 17:30
+                    td
+                        a(class='btn btn-primary btn-sm')
+                            span(class='glyphicon glyphicon-edit')
+                            span  修改
+        div(class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+            div(class="modal-dialog")
+                div(class="modal-content")
+                    div(class="modal-header")
+                        button(class="close" data-dismiss="modal" aria-hidden="true")
+                        h4(class="modal-title" id="myModalLabel") 项目编辑
+                    div(id="modal_project_body" class="modal-body")
+                    div(class="modal-footer")
+                        button(class="btn btn-default" data-dismiss="modal") 关闭
+                        button(class="btn btn-primary") 提交
