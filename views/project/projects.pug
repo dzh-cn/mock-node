@@ -10,8 +10,9 @@ html
     body(class='container')
         ol(class='breadcrumb')
             li home
+            li(class='current') 项目列表
         p
-            button(class='btn btn-success btn-sm')
+            button(class='btn btn-success btn-sm project-edit')
                 span(class='glyphicon glyphicon-plus')
                 span  新增项目
         table(class='table')
@@ -19,26 +20,31 @@ html
                 tr
                     th 项目名称
                     th 描述
-                    th 创建人
+                    //th 创建人
                     th 操作时间
                     th 操作
             tbody
-                tr
-                    td 运管后台
-                    td 商户运营后台
-                    td 董智华
-                    td 2018-06-29 17:30
-                    td
-                        a(class='btn btn-primary btn-sm')
-                            span(class='glyphicon glyphicon-edit')
-                            span  修改
+                each p in projects
+                    tr
+                        td #{p.name}
+                        td #{p.explain}
+                        //td #{p.author}
+                        td #{p.operationTime.toLocaleDateString()} #{p.operationTime.toLocaleTimeString()}
+                        td
+                            a(class='btn btn-primary btn-sm project-edit' projectId=p._id)
+                                span(class='glyphicon glyphicon-edit')
+                                span  修改
         div(class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
             div(class="modal-dialog")
                 div(class="modal-content")
                     div(class="modal-header")
-                        button(class="close" data-dismiss="modal" aria-hidden="true")
-                        h4(class="modal-title" id="myModalLabel") 项目编辑
+                        button(class="close" data-dismiss="modal" aria-hidden="true") &times;
+                        h4(class="modal-title" id="projectModalLabel") 项目编辑
                     div(id="modal_project_body" class="modal-body")
                     div(class="modal-footer")
                         button(class="btn btn-default" data-dismiss="modal") 关闭
-                        button(class="btn btn-primary") 提交
+                        button(id='saveProject' class="btn btn-primary") 提交
+                    div(class="save-alert-warning alert alert-warning hidden")
+                        a(href="#" class="close" data-dismiss="alert")  &times;
+                        strong(class='message')
+                        div(class='error')

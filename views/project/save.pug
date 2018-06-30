@@ -1,0 +1,14 @@
+docytype
+html
+    head
+        meta(charset='utf-8')
+        title project edit
+    body
+        form(action='/project/save' method='post')
+            input(name='id' value=_id type='hidden')
+            div(class="form-group")
+                label 项目名称
+                input(name='name' class="form-control" placeholder='请输入项目名称' value=name)
+            div(class="form-group")
+                label 项目描述
+                input(name='explain' class="form-control" placeholder='请输入项目描述' value=explain)
