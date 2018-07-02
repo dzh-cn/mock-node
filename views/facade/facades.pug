@@ -1,0 +1,54 @@
+docytype
+html
+    head
+        meta(charset='utf-8')
+        title facade list
+        link(type="text/css",rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
+        script(src='https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js')
+        script(src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js")
+        script(src='/js/facade.js')
+    body(class='container')
+        ol(class='breadcrumb')
+            li home
+            li(class='current') 接口列表
+        p
+            button(class='btn btn-success btn-sm facade-edit')
+                span(class='glyphicon glyphicon-plus')
+                span  新增接口
+        table(class='table')
+            thead
+                tr
+                    th 接口名称
+                    th uri
+                    th method
+                    th 描述
+                    //th 创建人
+                    th 操作时间
+                    th 操作
+            tbody
+                each p in facades
+                    tr
+                        td #{p.name}
+                        td uri
+                        td method
+                        td #{p.explain}
+                        //td #{p.author}
+                        td #{p.operationTime.toLocaleDateString()} #{p.operationTime.toLocaleTimeString()}
+                        td
+                            a(class='btn btn-primary btn-sm facade-edit' facadeId=p._id)
+                                span(class='glyphicon glyphicon-edit')
+                                span  修改
+        div(class="modal fade" id="facadeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+            div(class="modal-dialog")
+                div(class="modal-content")
+                    div(class="modal-header")
+                        button(class="close" data-dismiss="modal" aria-hidden="true") &times;
+                        h4(class="modal-title" id="facadeModalLabel") 接口编辑
+                    div(id="modal_facade_body" class="modal-body")
+                    div(class="modal-footer")
+                        button(class="btn btn-default" data-dismiss="modal") 关闭
+                        button(id='saveProject' class="btn btn-primary") 提交
+                    div(class="save-alert-warning alert alert-warning hidden")
+                        a(href="#" class="close" data-dismiss="alert")  &times;
+                        strong(class='message')
+                        div(class='error')

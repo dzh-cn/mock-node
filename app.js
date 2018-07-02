@@ -6,6 +6,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var mockRouter = require('./routes/mock');
 var projectRouter = require('./routes/project');
+var facadeRouter = require('./routes/facade');
 
 var app = express();
 
@@ -19,5 +20,6 @@ app.set('view engine', 'pug');
 app.use('/', indexRouter);
 app.use('/mock', mockRouter);
 app.use('/project', projectRouter);
+app.use('/facade', facadeRouter);
 
 module.exports = app;

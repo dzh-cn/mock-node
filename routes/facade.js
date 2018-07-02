@@ -2,57 +2,68 @@ var express = require('express');
 var router = express.Router('');
 var db = require('../db/mongodbModel')
 var mongoose = require('mongoose');
-var projectSchema = new mongoose.Schema({
+var Element = {
+	name: String,
+	type: String,
+    mock: String,
+    explain: String
+}
+
+var facadeSchema = new mongoose.Schema({
+	projectId: String,
+	uri: String,
+	method: String,
 	name: String,
 	explain: String,
 	author: String,
-	operationTime: Date
-
+	operationTime: Date,
+	reqElements: [Element],
+	resElement: [Element]
 });
 
-var projectModel = db.model('projects', projectSchema)
+var facadeModel = db.model('facades', facadeSchema)
 
-/* project list */
+/* facade list */
 router.get('/', function (req, res) {
-    projectModel.find(function (err, doc) {
+    facadeModel.find(function (err, doc) {
         var result = {};
         if (err) {
             result.success = false;
             result.message = '操作失败';
             result.error = err;
         } else {
-            result.projects = doc;
+            result.facades = doc;
         }
         // console.log(result);
-        res.render('project/projects', result);
+        res.render('facade/facades', result);
     })
 });
 
-/* project detail */
+/* facade detail */
 router.get('/save', function (req, res) {
-    var project = req.query
-    // console.log("req", project);
-    if (project && project.id) {
-        var id = mongoose.Types.ObjectId(project.id)
-        projectModel.find({_id: id}, function (err, doc) {
+    var facade = req.query
+    // console.log("req", facade);
+    if (facade && facade.id) {
+        var id = mongoose.Types.ObjectId(facade.id)
+        facadeModel.find({_id: id}, function (err, doc) {
             if (err) {
-                project.success = false
-                project.message = '查询失败';
-                project.error = err;
+                facade.success = false
+                facade.message = '查询失败';
+                facade.error = err;
             } else {
-                project.success = true
-                project = doc[0]
+                facade.success = true
+                facade = doc[0]
             }
-            // console.log("project", project);
-            res.render('project/save', project);
+            // console.log("facade", facade);
+            res.render('facade/save', facade);
         })
     } else {
-        // console.log("project", project);
-        res.render('project/save', project);
+        // console.log("facade", facade);
+        res.render('facade/save', facade);
     }
 });
 
-/* project save */
+/* facade save */
 router.post('/save', function (req, res) {
     var id = req.body.id == ''? null : mongoose.Types.ObjectId(req.body.id)
     var optionCallback = function (err) {
@@ -65,7 +76,7 @@ router.post('/save', function (req, res) {
         }
     }
     req.body.operationTime = new Date()
-    projectModel.update({_id: id}, req.body, optionCallback)
+    facadeModel.update({_id: id}, req.body, optionCallback)
 });
 
 module.exports = router;
