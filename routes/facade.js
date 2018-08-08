@@ -18,7 +18,7 @@ var facadeSchema = new mongoose.Schema({
 	author: String,
 	operationTime: Date,
 	reqElements: [Element],
-	resElement: [Element]
+	resElements: [Element]
 });
 
 var facadeModel = db.model('facades', facadeSchema)
@@ -69,14 +69,18 @@ router.post('/save', function (req, res) {
     var optionCallback = function (err) {
         if (err) {
             console.log(err)
-            res.send({success: false, message: "操作失败！", time: new Date(), error: err})
+            res.render('facade/save', {success: false, message: "操作失败！", time: new Date(), error: err});
         } else {
             // console.log('save success')
-            res.send({success: true, message: "操作成功！", time: new Date()})
+            res.redirect("/facade")
         }
     }
     req.body.operationTime = new Date()
-    facadeModel.update({_id: id}, req.body, optionCallback)
+    if(id)
+        facadeModel.update({_id: id}, req.body, optionCallback)
+    else
+        var model = new facadeModel(req.body);
+        model.save(req.body, optionCallback)
 });
 
 module.exports = router;

@@ -4,77 +4,81 @@ html
         link(type="text/css",rel="stylesheet",href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css")
         meta(charset='utf-8')
         title facade edit
-    body(class='container')
-        ol(class='breadcrumb')
-            li home
-            li(class='current') 接口编辑
-        form(action='/facade/save' method='post')
-            input(name='id' value=_id type='hidden')
-            input(name='projectId' value=projectId type='hidden')
-            div(class="form-group")
-                label 接口名称
-                input(name='name' class="form-control" placeholder='请输入接口名称' value=name)
-            div(class="form-group")
-                label 接口描述
-                input(name='explain' class="form-control" placeholder='请输入接口描述' value=explain)
-            div(class="form-group")
-                label uri
-                input(name='uri' class="form-control" placeholder='请输入接口描述' value=uri)
-            div(class="form-group")
-                label method
-                input(name='method' class="form-control" placeholder='请输入接口描述' value=method)
-            table(class='table')
-                caption
-                    h3 参数列表
-                thead
-                    th 名称
-                    th 类型
-                    th 描述
-                    th mock
-                    th
-                tbody
-                    if reqElements == null
-                        -var reqElements = [1]
-                    each e in reqElements
-                        tr
-                            td
-                                input(type='hidden' name='pid')
-                                input(name='reqElements.name' value=e.name class="form-control" placeholder='请输入名称')
-                            td
-                                input(name='reqElements.type' value=e.type class="form-control" placeholder='请输入类型')
-                            td
-                                input(name='reqElements.explain' value=e.explain class="form-control" placeholder='请输入描述')
-                            td
-                                input(name='reqElements.mock' value=e.mock class="form-control" placeholder='请输入mock')
-                            td
-                                a(class='btn btn-success btn-sm param-edit')
-                                    span(class='glyphicon glyphicon-plus')
-            table(class='table')
-                caption
-                    h3 返回值列表
-                thead
-                    th 名称
-                    th 类型
-                    th 描述
-                    th mock
-                    th
-                tbody
-                    if resElements == null
-                        -var resElements = [1]
-                    each e in resElements
-                        tr
-                            td
-                                input(type='hidden' name='pid')
-                                input(name='name' value=e.name class="form-control" placeholder='请输入名称')
-                            td
-                                input(name='type' value=e.type class="form-control" placeholder='请输入类型')
-                            td
-                                input(name='explain' value=e.explain class="form-control" placeholder='请输入描述')
-                            td
-                                input(name='mock' value=e.mock class="form-control" placeholder='请输入mock')
-                            td
-                                a(class='btn btn-success btn-sm param-edit')
-                                    span(class='glyphicon glyphicon-plus')
-            div(class="modal-footer")
-                button(class="btn btn-default") 关闭
-                button(class="btn btn-primary") 提交
+    body
+        div(class='container')
+            ol(class='breadcrumb')
+                li home
+                li 接口列表
+                li(class='current') 接口编辑
+            form(action='/facade/save' method='post')
+                input(name='id' value=_id type='hidden')
+                input(name='projectId' value=projectId type='hidden')
+                div(class="form-group")
+                    label 接口名称
+                    input(name='name' class="form-control" placeholder='请输入接口名称' value=name)
+                div(class="form-group")
+                    label 接口描述
+                    input(name='explain' class="form-control" placeholder='请输入接口描述' value=explain)
+                div(class="form-group")
+                    label uri
+                    input(name='uri' class="form-control" placeholder='请输入接口描述' value=uri)
+                div(class="form-group")
+                    label method
+                    input(name='method' class="form-control" placeholder='请输入接口描述' value=method)
+                table(class='table')
+                    caption
+                        h3 参数列表
+                    thead
+                        th 名称
+                        th 类型
+                        th 描述
+                        th mock
+                        th
+                    tbody
+                        if reqElements == null
+                            -var reqElements = [1]
+                        each e in reqElements
+                            tr
+                                td
+                                    input(type='hidden' name='resElements.pid')
+                                    input(name='reqElements.name' value=e.name class="form-control" placeholder='请输入名称')
+                                td
+                                    input(name='reqElements.type' value=e.type class="form-control" placeholder='请输入类型')
+                                td
+                                    input(name='reqElements.explain' value=e.explain class="form-control" placeholder='请输入描述')
+                                td
+                                    input(name='reqElements.mock' value=e.mock class="form-control" placeholder='请输入mock')
+                                td
+                                    a(class='btn btn-sm param-edit')
+                                        span(class='glyphicon glyphicon-plus')
+                                    a(class='btn btn-sm param-edit')
+                                        span(class='glyphicon glyphicon-minus')
+                table(class='table')
+                    caption
+                        h3 返回值列表
+                    thead
+                        th 名称
+                        th 类型
+                        th 描述
+                        th mock
+                        th
+                    tbody
+                        if resElements == null
+                            -var resElements = [1]
+                        each e in resElements
+                            tr
+                                td
+                                    input(type='hidden' name='resElements.pid')
+                                    input(name='resElements.name' value=e.name class="form-control" placeholder='请输入名称')
+                                td
+                                    input(name='resElements.type' value=e.type class="form-control" placeholder='请输入类型')
+                                td
+                                    input(name='resElements.explain' value=e.explain class="form-control" placeholder='请输入描述')
+                                td
+                                    input(name='resElements.mock' value=e.mock class="form-control" placeholder='请输入mock')
+                                td
+                                    a(class='btn btn-success btn-default param-edit')
+                                        span(class='glyphicon glyphicon-plus')
+                div(class="modal-footer")
+                    button(class="btn btn-default") 关闭
+                    button(class="btn btn-primary") 提交

@@ -4,11 +4,12 @@ $(function () {
 		if (id == null) {
 			id = ''
 		}
-		$("#modal_facade_body").load('/facade/save?id=' + id);
-		$('#facadeModal').modal({
-			backdrop: false,
-			keyboard: false,
-		})
+		open('/facade/save?id=' + id)
+		// $("#modal_facade_body").load('/facade/save?id=' + id);
+		// $('#facadeModal').modal({
+		// 	backdrop: false,
+		// 	keyboard: false,
+		// })
 	})
 
 	$('#saveProject').click(function () {
