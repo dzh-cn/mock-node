@@ -10,11 +10,11 @@ var projectSchema = new mongoose.Schema({
 
 });
 
-var projectModel = db.model('projects', projectSchema)
+var ProjectModel = db.model('projects', projectSchema)
 
 /* project list */
 router.get('/', function (req, res) {
-    projectModel.find(function (err, doc) {
+    ProjectModel.find(function (err, doc) {
         var result = {};
         if (err) {
             result.success = false;
@@ -34,7 +34,7 @@ router.get('/save', function (req, res) {
     // console.log("req", project);
     if (project && project.id) {
         var id = mongoose.Types.ObjectId(project.id)
-        projectModel.find({_id: id}, function (err, doc) {
+        ProjectModel.find({_id: id}, function (err, doc) {
             if (err) {
                 project.success = false
                 project.message = '查询失败';
@@ -65,7 +65,32 @@ router.post('/save', function (req, res) {
         }
     }
     req.body.operationTime = new Date()
-    projectModel.update({_id: id}, req.body, optionCallback)
+    if(id) {
+        ProjectModel.update({_id: id}, req.body, optionCallback)
+    } else {
+        new ProjectModel(req.body).save(optionCallback)
+    }
 });
+
+/* project delete */
+router.get('/delete', function (req, res) {
+    var project = req.query
+    var optionCallback = function (err) {
+        if (err) {
+            console.log(err)
+            res.send({success: false, message: "操作失败！", time: new Date(), error: err})
+        } else {
+            // console.log('save success')
+            res.send({success: true, message: "操作成功！", time: new Date()})
+        }
+    }
+    if(project && project.id) {
+        var param = {'_id':mongoose.Types.ObjectId(project.id)}
+        ProjectModel.remove(param, optionCallback);
+    } else {
+        console.log('id为空');
+        res.send({success: true, message: "操作失败！", time: new Date()})
+    }
+})
 
 module.exports = router;
